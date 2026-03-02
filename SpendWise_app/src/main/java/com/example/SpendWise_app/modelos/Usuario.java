@@ -1,8 +1,12 @@
 package com.example.SpendWise_app.modelos;
+import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,21 +16,44 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "nombre", nullable = false)
     private String nombre;
+    @Column(name = "documento", nullable = false, unique = true)
     private String documento;
+    @Column(name = "tipo de documento", nullable = false)
     private String tipodocu;
+    @Column(name = "edad")
     private Integer edad;
+    //-------------------------------------------------------------------
+
+    @Column(name = "telefono", nullable = false, unique = true)
+    private Integer telefono;
+    @Column(name = "email", nullable = false, unique = true)
+    private String correo;
+    @Column(name = "password", nullable = false, unique = true)
+    private String password;
+    @Column(name = "estado de cuenta")
+    private String estado_de_cuenta;
+    private String foto_de_perfil;
 
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nombre, String documento, String tipodocu, Integer edad) {
+
+    public Usuario(Integer id, String nombre, String documento, String tipodocu, Integer edad, Integer telefono,
+            String correo, String password, String estado_de_cuenta, String foto_de_perfil) {
         this.id = id;
         this.nombre = nombre;
         this.documento = documento;
         this.tipodocu = tipodocu;
         this.edad = edad;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.password = password;
+        this.estado_de_cuenta = estado_de_cuenta;
+        this.foto_de_perfil = foto_de_perfil;
     }
+
 
     public Integer getId() {
         return id;
@@ -68,5 +95,57 @@ public class Usuario {
         this.edad = edad;
     }
 
+
+    public Integer getTelefono() {
+        return telefono;
+    }
+
+
+    public void setTelefono(Integer telefono) {
+        this.telefono = telefono;
+    }
+
+
+    public String getCorreo() {
+        return correo;
+    }
+
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public String getEstado_de_cuenta() {
+        return estado_de_cuenta;
+    }
+
+
+    public void setEstado_de_cuenta(String estado_de_cuenta) {
+        this.estado_de_cuenta = estado_de_cuenta;
+    }
+
+
+    public String getFoto_de_perfil() {
+        return foto_de_perfil;
+    }
+
+
+    public void setFoto_de_perfil(String foto_de_perfil) {
+        this.foto_de_perfil = foto_de_perfil;
+    }
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Gastos> gastos;
 
 }
