@@ -1,6 +1,7 @@
 package com.example.SpendWise_app.modelos;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +26,7 @@ public class Gastos {
     private LocalDate fecha;
     @Column(name = "valor", nullable = false)
     private double valor;
+    @Column(name = "foto", length = 250)
     private String icono;
     //---------------------------------------------------------
 
@@ -37,6 +40,18 @@ public class Gastos {
     private Integer impuesto;
     @Column(name = "recurente")
     private String recurente;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
+
+    @OneToMany(mappedBy = "gasto")
+    private List <Comercio> comercio;
+
+    @OneToMany(mappedBy = "gasto")
+    private List <Categoria> categoria;
+
+    
 
     public Gastos() {
     }
@@ -147,19 +162,16 @@ public class Gastos {
         this.recurente = recurente;
     } 
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    // @ManyToOne
+    // @JoinColumn(name = "fk_categoria_id", referencedColumnName = "id")
+    // private Categoria categoria;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
+    // @ManyToOne
+    // @JoinColumn(name = "fk_comercio_id", referencedColumnName = "id")
+    // private Comercio comercio;
 
-    @ManyToOne
-    @JoinColumn(name = "comercio_id")
-    private Comercio comercio;
+    // @ManyToOne
+    // @JoinColumn(name = "fk_mediopago_id", referencedColumnName = "id")
+    // private MedioPago medioPago;
 
-    @ManyToOne
-    @JoinColumn(name = "mediopago_id")
-    private MedioPago medioPago;
 }

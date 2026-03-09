@@ -1,8 +1,13 @@
 package com.example.SpendWise_app.modelos;
 import java.util.List;
 
+import com.example.SpendWise_app.modelos.utils.Estado;
+import com.example.SpendWise_app.modelos.utils.TipoDocumento;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,32 +21,41 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
-    @Column(name = "documento", nullable = false, unique = true)
+    @Column(name = "documento", nullable = false, unique = true, length = 15)
     private String documento;
-    @Column(name = "tipo de documento", nullable = false)
-    private String tipodocu;
+    @Column(name = "tipo_de_documento", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TipoDocumento tipodocu;
     @Column(name = "edad")
     private Integer edad;
     //-------------------------------------------------------------------
 
     @Column(name = "telefono", nullable = false, unique = true)
     private Integer telefono;
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true, length = 150)
     private String correo;
-    @Column(name = "password", nullable = false, unique = true)
+    @Column(name = "password", nullable = false, unique = true, length = 50)
     private String password;
-    @Column(name = "estado de cuenta")
-    private String estado_de_cuenta;
+    @Column(name = "estado_de_cuenta")
+    @Enumerated(EnumType.STRING)
+    private Estado estado_de_cuenta;
+    @Column(name = "foto", length = 250)
     private String foto_de_perfil;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Gastos> gastos;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<MedioPago> medioPago;
 
     public Usuario() {
     }
 
 
-    public Usuario(Integer id, String nombre, String documento, String tipodocu, Integer edad, Integer telefono,
-            String correo, String password, String estado_de_cuenta, String foto_de_perfil) {
+    public Usuario(Integer id, String nombre, String documento, TipoDocumento tipodocu, Integer edad, Integer telefono,
+            String correo, String password, Estado estado_de_cuenta, String foto_de_perfil) {
         this.id = id;
         this.nombre = nombre;
         this.documento = documento;
@@ -79,11 +93,11 @@ public class Usuario {
         this.documento = documento;
     }
 
-    public String getTipodocu() {
+    public TipoDocumento getTipodocu() {
         return tipodocu;
     }
 
-    public void setTipodocu(String tipodocu) {
+    public void setTipodocu(TipoDocumento    tipodocu) {
         this.tipodocu = tipodocu;
     }
 
@@ -126,12 +140,12 @@ public class Usuario {
     }
 
 
-    public String getEstado_de_cuenta() {
+    public Estado getEstado_de_cuenta() {
         return estado_de_cuenta;
     }
 
 
-    public void setEstado_de_cuenta(String estado_de_cuenta) {
+    public void setEstado_de_cuenta(Estado estado_de_cuenta) {
         this.estado_de_cuenta = estado_de_cuenta;
     }
 
@@ -145,7 +159,5 @@ public class Usuario {
         this.foto_de_perfil = foto_de_perfil;
     }
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Gastos> gastos;
 
 }

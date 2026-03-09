@@ -1,13 +1,16 @@
 package com.example.SpendWise_app.modelos;
 
-import java.util.List;
+import com.example.SpendWise_app.modelos.utils.Estado;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,12 +25,17 @@ public class MedioPago {
     @Column(name = "franquicia", nullable = false)
     private String franquicia;
     @Column(name = "estado")
-    private String estado;
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
     
     public MedioPago() {
     }
 
-    public MedioPago(Integer id, String nombre, String franquicia, String estado) {
+    public MedioPago(Integer id, String nombre, String franquicia, Estado estado) {
         this.id = id;
         this.nombre = nombre;
         this.franquicia = franquicia;
@@ -58,15 +66,15 @@ public class MedioPago {
         this.franquicia = franquicia;
     }
 
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    @OneToMany(mappedBy = "medioPago")
-    private List<Gastos> gastos;
+    // @OneToMany(mappedBy = "medioPago")
+    // private List<Gastos> gastos;
 
 }
