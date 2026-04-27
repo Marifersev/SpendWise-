@@ -1,14 +1,18 @@
 package com.example.SpendWise_app.modelos;
 
 import java.time.LocalDate;
-import java.util.List;
+
+import com.example.SpendWise_app.modelos.utils.TipoCategoria;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -35,17 +39,21 @@ public class Categoria {
     @Column(name = "limite", nullable = false)
     private Integer limite;
     @Column(name = "tipo")
-    private String tipo;
+    @Enumerated(EnumType.STRING)
+    private TipoCategoria tipo;
     @Column(name = "periodicidad")
     private String periodicidad;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "fk_gasto_id", referencedColumnName = "id")
+    private Gastos gasto;
+
     public Categoria() {
     }
 
 
     public Categoria(Integer id, String nombre, LocalDate fechacreacion, String responsable, String justificacion,
-            Integer presupuesto, String prioridad, Integer limite, String tipo, String periodicidad) {
+            Integer presupuesto, String prioridad, Integer limite, TipoCategoria tipo, String periodicidad) {
         this.id = id;
         this.nombre = nombre;
         this.fechacreacion = fechacreacion;
@@ -131,12 +139,12 @@ public class Categoria {
     }
 
 
-    public String getTipo() {
+    public TipoCategoria getTipo() {
         return tipo;
     }
 
 
-    public void setTipo(String tipo) {
+    public void setTipo(TipoCategoria tipo) {
         this.tipo = tipo;
     }
 
@@ -150,6 +158,7 @@ public class Categoria {
         this.periodicidad = periodicidad;
     }
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Gastos> gastos;
+        // @OneToMany(mappedBy = "categoria")
+        // private List<Gastos> gastos;
+
 }

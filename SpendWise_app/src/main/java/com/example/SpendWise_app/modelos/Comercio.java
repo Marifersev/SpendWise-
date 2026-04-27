@@ -1,14 +1,16 @@
 package com.example.SpendWise_app.modelos;
 
-
-import java.util.List;
+import com.example.SpendWise_app.modelos.utils.TipoComercio;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,24 +29,29 @@ public class Comercio {
     @Column(name = "contacto")
     private String contacto;
   //-----------------------------
-  
+
     @Column(name = "ciudad")
     private String ciudad;
     @Column(name = "sitio web")
     private String sitio_web;
     @Column(name = "tipo de comercio")
-    private String tipo_de_comercio;
+    @Enumerated(EnumType.STRING)
+    private TipoComercio tipo_de_comercio;
     @Column(name = "telefono")
     private Integer telefono;
     @Column(name = "correo")
     private String correo;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_gasto_id", referencedColumnName = "id")
+    private Gastos gasto;
 
     public Comercio() {
     }
 
 
     public Comercio(Integer id, Integer nit, String nombre, String actividad, String contacto, String ciudad,
-            String sitio_web, String tipo_de_comercio, Integer telefono, String correo) {
+            String sitio_web, TipoComercio tipo_de_comercio, Integer telefono, String correo) {
         this.id = id;
         this.nit = nit;
         this.nombre = nombre;
@@ -119,12 +126,12 @@ public class Comercio {
     }
 
 
-    public String getTipo_de_comercio() {
+    public TipoComercio getTipo_de_comercio() {
         return tipo_de_comercio;
     }
 
 
-    public void setTipo_de_comercio(String tipo_de_comercio) {
+    public void setTipo_de_comercio(TipoComercio tipo_de_comercio) {
         this.tipo_de_comercio = tipo_de_comercio;
     }
 
@@ -148,7 +155,8 @@ public class Comercio {
         this.correo = correo;
     } 
 
-    @OneToMany(mappedBy = "comercio")
-    private List<Gastos> gastos;
+    
+    // @OneToMany(mappedBy = "comercio")
+    // private List<Gastos> gastos;
 
 }
