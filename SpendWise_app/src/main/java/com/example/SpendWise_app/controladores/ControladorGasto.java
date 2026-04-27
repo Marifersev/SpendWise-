@@ -18,16 +18,12 @@ public class ControladorGasto {
     @Autowired
     GastoServicio servicio;
 
-    //por cada servicio programa un metodo, para recibir y enviar respuestas al cliente 
-
-    //funcion controladora para el servicio de guardar usuario
     public ResponseEntity <?> controladorGuardar(@RequestBody Gastos datos){
         return ResponseEntity.status(HttpStatus.OK).body(
             servicio.guardar(datos)
         );
     }
 
-    //funcion controladora para el servicio de listar todos los usuarios
     public ResponseEntity <?> controladorListar(){
         return ResponseEntity.status(HttpStatus.OK).body(
             servicio.listar_gastos()
