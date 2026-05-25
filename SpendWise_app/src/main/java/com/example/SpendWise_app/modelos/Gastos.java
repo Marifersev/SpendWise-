@@ -48,8 +48,12 @@ public class Gastos {
     @OneToMany(mappedBy = "gasto")
     private List <Comercio> comercio;
 
-    @OneToMany(mappedBy = "gasto")
-    private List <Categoria> categoria;
+    // @OneToMany(mappedBy = "gasto")
+    // private List <Categoria> categoria;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
     
 

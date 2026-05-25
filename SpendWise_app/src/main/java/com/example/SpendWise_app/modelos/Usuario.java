@@ -32,11 +32,11 @@ public class Usuario {
     private Integer edad;
     //-------------------------------------------------------------------
 
-    @Column(name = "telefono", nullable = false, unique = true)
+    @Column(name = "telefono", nullable = false, unique = true, length = 20)
     private Integer telefono;
     @Column(name = "email", nullable = false, unique = true, length = 150)
     private String correo;
-    @Column(name = "password", nullable = false, unique = true, length = 50)
+    @Column(name = "password", nullable = false, length = 50)
     private String password;
     @Column(name = "estado_de_cuenta")
     @Enumerated(EnumType.STRING)

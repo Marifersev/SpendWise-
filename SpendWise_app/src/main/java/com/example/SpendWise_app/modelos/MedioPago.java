@@ -74,6 +74,10 @@ public class MedioPago {
         this.estado = estado;
     }
 
+    
+
+    
+
     // @OneToMany(mappedBy = "medioPago")
     // private List<Gastos> gastos;
 

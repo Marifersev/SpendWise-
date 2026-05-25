@@ -5,6 +5,9 @@ public enum TipoDocumento {
     Cedula,
     Pasaporte,
     Tarjeta_identidad,
-    Registro_civil
+    Registro_civil,
+    TI,
+    CC,
+    RC
 
 }

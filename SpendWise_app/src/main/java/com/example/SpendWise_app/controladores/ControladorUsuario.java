@@ -9,11 +9,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.SpendWise_app.modelos.Usuario;
 import com.example.SpendWise_app.servicio.UsuarioServicio;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+
 
 
 
 @RestController
-@RequestMapping("/apineoapp/v1/usuarios")
+@RequestMapping("/apispendwiseapp/v1/usuarios")
 public class ControladorUsuario {
 
     @Autowired
@@ -22,6 +30,7 @@ public class ControladorUsuario {
     //por cada servicio programa un metodo, para recibir y enviar respuestas al cliente 
 
     //funcion controladora para el servicio de guardar usuario
+    @PostMapping
     public ResponseEntity <?> controladorGuardar(@RequestBody Usuario datos){
         return ResponseEntity.status(HttpStatus.OK).body(
             servicio.guardar_usuario(datos)
@@ -29,10 +38,34 @@ public class ControladorUsuario {
     }
 
     //funcion controladora para el servicio de listar todos los usuarios
+    @GetMapping
     public ResponseEntity <?> controladorListar(){
         return ResponseEntity.status(HttpStatus.OK).body(
             servicio.listar_usuarios()
         );
     }
-    
+
+    //control para modificar
+    @PutMapping("/{id}")
+    public ResponseEntity <?> controladorModificar(@PathVariable Integer id, @RequestBody Usuario datos){
+        return ResponseEntity.status(HttpStatus.OK).body(
+            servicio.modificar_usuario(id,datos)
+        );
+    }
+
+    //control para eliminar
+    @DeleteMapping("/{id}")
+    public ResponseEntity <?> controladorEliminar(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+            servicio.eliminar_usuario(id)
+        );
+    }
+
+    //control para buscar por id
+    @GetMapping("/{id}")
+    public ResponseEntity <?> controladorBuscar(@PathVariable Integer id){
+        return ResponseEntity.status(HttpStatus.OK).body(
+            servicio.buscar_usuario_por_id(id)
+        );
+    }
 }

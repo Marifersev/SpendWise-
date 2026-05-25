@@ -1,6 +1,7 @@
 package com.example.SpendWise_app.modelos;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.example.SpendWise_app.modelos.utils.TipoCategoria;
 
@@ -11,8 +12,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+// import jakarta.persistence.JoinColumn;
+// import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,7 +26,7 @@ public class Categoria {
     private Integer id;
     @Column(name = "nombre", nullable = false)
     private String nombre;
-    @Column(name = "fecha de creacion", nullable = false)
+    @Column(name = "fecha_creacion", nullable = false)
     private LocalDate fechacreacion;
     @Column(name = "responsable", nullable = false)
     private String responsable;
@@ -44,9 +46,12 @@ public class Categoria {
     @Column(name = "periodicidad")
     private String periodicidad;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_gasto_id", referencedColumnName = "id")
-    private Gastos gasto;
+    // @ManyToOne
+    // @JoinColumn(name = "fk_gasto_id", referencedColumnName = "id")
+    // private Gastos gasto;
+
+    @OneToMany(mappedBy = "categoria")
+    private List<Gastos> gastos;
 
     public Categoria() {
     }

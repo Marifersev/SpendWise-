@@ -1,6 +1,7 @@
 package com.example.SpendWise_app.servicio;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,45 @@ public class ComercioServicio {
 
     public List<Comercio> listar_comercios(){
         return repositorio.findAll();
+    }
+
+    public Comercio modificar_comercio(Integer id, Comercio datosNuevos){
+        Optional<Comercio> comercio_que_busco=repositorio.findById(id);
+        if (comercio_que_busco.isEmpty()) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Comercio no encontrado"
+            );
+        }else{
+            Comercio comercio_encontrado=comercio_que_busco.get();
+            comercio_encontrado.setContacto(datosNuevos.getContacto());
+            comercio_encontrado.setTipo_de_comercio(datosNuevos.getTipo_de_comercio());
+            return repositorio.save(comercio_encontrado);
+        }
+    }
+
+    public boolean eliminar_comercio(Integer id){
+        Optional<Comercio> comercio_que_busco=repositorio.findById(id);
+        if (comercio_que_busco.isEmpty()) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Comercio no encontrado"
+            );
+        }else{
+            repositorio.deleteById(id);
+            return true;
+        }
+    }
+
+    public Comercio buscar_comercio_por_id(Integer id){
+        Optional<Comercio> comercio_que_busco=repositorio.findById(id);
+        if (comercio_que_busco.isEmpty()) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "Comercio no encontrado"
+            );
+        }else{
+            return comercio_que_busco.get();
+        }
     }
 }
